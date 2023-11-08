@@ -2,8 +2,9 @@
   "name": "api-liverpool",
   "version": "1.0.0",
   "description": "API MVC nodejs",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
+    "dev": "nodemon --config nodemon.json src/app.js"
   },
   "author": "Irvin Santiago Mitre Martinez",
   "license": "ISC",

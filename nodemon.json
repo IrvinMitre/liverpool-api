@@ -1,0 +1,9 @@
+{
+    "verbose": true,
+    "watch": ["src"],
+    "ext": "js json",
+    "execMap": {
+      "js": "node --experimental-modules"
+    },
+    "ignore": ["src/views"]
+  }
