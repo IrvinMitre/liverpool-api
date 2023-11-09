@@ -2,9 +2,16 @@ const OrderService = require("../services/orderService");
 
 module.exports = class OrderClass {
   static async getAllOrders(req, res) {
+    const { limit, offset } = req.query;
     try {
-      const allOrders = await OrderService.getAllOrders();
-      return res.send(allOrders);
+      const allOrders = await OrderService.getAllOrders(limit, offset);
+      const response = {
+        limit: limit,
+        offset: offset,
+        count: allOrders.totalCount,
+        orders: allOrders.orders,
+      }
+      return res.send(response);
     } catch (error) {
       const message = { message: "Error Get all orders" };
       return res.status(400).send(message);

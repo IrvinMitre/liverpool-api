@@ -4,8 +4,10 @@ const { parseDate } = require("../utils/date");
 const { StatusCompleted, StatusPending } = require("../constants/order");
 
 module.exports = class ClientService {
-  static async getAllOrders() {
-    return await Order.find();
+  static async getAllOrders(limit, offset) {
+    const orders =  await Order.find().skip(offset).limit(limit);
+    const totalCount = await Order.countDocuments();
+    return { orders, totalCount };
   }
 
   static async createOrders(orders) {
