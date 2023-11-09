@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const orderController = require("../../controllers/orderController");
+const multer = require('multer');
+const upload = multer();
+
 
 router.get("/", orderController.getAllOrders);
 
-router.post("/", orderController.createNewOrder);
+router.post("/", upload.single('file'), orderController.createNewOrder);
 
-router.patch("/:orderId", orderController.updateOneOrder);
+router.post("/update", orderController.updateOneOrder);
 
-router.delete("/:orderId", orderController.deleteOneOrder);
+router.post("/delete", orderController.deleteOneOrder);
 
 module.exports = router;
