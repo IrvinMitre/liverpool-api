@@ -1,23 +1,35 @@
 const Order = require("../models/order");
+const mongoose = require("mongoose");
+const { parseDate } = require("../utils/date");
+const { StatusCompleted, StatusPending } = require("../constants/order");
 
-module.exports = class clientService {
+module.exports = class ClientService {
   static async getAllOrders() {
     return await Order.find();
   }
 
-  static async createNewOrder(description, user) {
-    const newOrder = {
-      description: description,
-      created_at: Date.now(),
-      down_at: Date.now(),
-      user: user,
-    };
-    const response = await Order.create(newOrder);
-    return response;
+  static async createOrders(orders) {
+    const session = await mongoose.startSession();
+    await session.withTransaction(async () => {
+      const database = session.client.db("liverpool");
+      const ordersToInsert = orders.slice(1).map((element) => {
+        const created_at = parseDate(element[1]);
+        const down_at = parseDate(element[2]);
+        return {
+          description: element[0],
+          created_at,
+          down_at,
+          user: element[3],
+          status: StatusPending,
+        };
+      });
+
+      await database.collection("orders").insertMany(ordersToInsert);
+    });
   }
 
   static async updateOneOrder(id) {
-    return Order.findOneAndUpdate({ _id: id }, { down_at: Date.now() });
+    return Order.findOneAndUpdate({ _id: id }, { status: StatusCompleted });
   }
 
   static async deleteOneOrder(id) {

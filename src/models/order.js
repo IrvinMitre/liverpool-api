@@ -13,6 +13,7 @@ const orderSchema = Schema({
     default: Date.now,
   },
   user: String,
+  status: String,
 });
 
 const Order = mongoose.model('Order', orderSchema);
