@@ -28,3 +28,5 @@ To run this API, you'll need to follow these steps:
    ```bash
    npm run dev
    ```
+
+3. Use the front-end to test

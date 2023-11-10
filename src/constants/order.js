@@ -13,7 +13,7 @@ const months = {
   diciembre: 11,
 };
 
-const StatusCompleted = 'completed'
-const StatusPending = 'Pending'
+const StatusCompleted = 'Completa'
+const StatusPending = 'Pendiente'
 
 module.exports = { months, StatusCompleted, StatusPending };
